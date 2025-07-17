@@ -8,7 +8,7 @@ import { featuredProjects, testimonials } from '@/lib/data';
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <section className="w-full pt-20 md:pt-32 lg:pt-40 bg-background relative">
+      <section className="w-full min-h-screen bg-background relative flex flex-col justify-center">
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
           <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl mx-auto">
             Una impresión que cautiva
