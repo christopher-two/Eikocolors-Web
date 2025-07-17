@@ -16,7 +16,7 @@ const navLinks = [
   { href: '/services', label: 'Servicios' },
   { href: '/store',label: 'Tienda' },
   { href: '/contact', label: 'Contacto' },
-  { href: '/assistant', label: 'Asistente IA', icon: <Bot className="h-4 w-4 mr-1 text-accent" /> },
+  { href: '/assistant', label: 'Eikobot', icon: <Bot className="h-4 w-4 mr-1 text-accent" /> },
 ];
 
 const Logo = () => (
