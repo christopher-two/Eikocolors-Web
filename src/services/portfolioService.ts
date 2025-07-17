@@ -2,7 +2,7 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, query, where, getDoc, doc } from 'firebase/firestore';
 import type { PortfolioProject } from '@/lib/types';
 
-// Fallback data in case Firebase is not configured
+// This data is used as a fallback if Firebase is not connected or fails.
 const fallbackProjects: PortfolioProject[] = [
     {
         id: '1',
@@ -64,11 +64,11 @@ const fallbackProjects: PortfolioProject[] = [
 ];
 
 export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
-    if (!db) return fallbackProjects;
     try {
         const projectsCol = collection(db, 'portfolioProjects');
         const projectsSnapshot = await getDocs(projectsCol);
         if (projectsSnapshot.empty) {
+            console.log("No projects found in Firestore, returning fallback data.");
             return fallbackProjects;
         }
         const projectsList = projectsSnapshot.docs.map(doc => ({
@@ -77,33 +77,28 @@ export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
         } as PortfolioProject));
         return projectsList;
     } catch (error) {
-        console.error("Firebase error, returning fallback projects:", error);
+        console.error("Firebase error fetching projects, returning fallback data:", error);
         return fallbackProjects;
     }
 }
 
 export async function getProjectBySlug(slug: string): Promise<PortfolioProject | null> {
-    if (!db) {
-        return fallbackProjects.find(p => p.slug === slug) || null;
-    }
     try {
         const q = query(collection(db, "portfolioProjects"), where("slug", "==", slug));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            return null;
+            console.log(`Project with slug "${slug}" not found in Firestore, checking fallback data.`);
+            return fallbackProjects.find(p => p.slug === slug) || null;
         }
         const projectDoc = querySnapshot.docs[0];
         return { id: projectDoc.id, ...projectDoc.data() } as PortfolioProject;
     } catch (error) {
-        console.error("Firebase error, returning fallback project by slug:", error);
+        console.error(`Firebase error fetching project with slug "${slug}", returning fallback data:`, error);
         return fallbackProjects.find(p => p.slug === slug) || null;
     }
 }
 
 export async function getProjectById(id: string): Promise<PortfolioProject | null> {
-     if (!db) {
-        return fallbackProjects.find(p => p.id === id) || null;
-    }
     try {
         const docRef = doc(db, 'portfolioProjects', id);
         const docSnap = await getDoc(docRef);
@@ -111,10 +106,11 @@ export async function getProjectById(id: string): Promise<PortfolioProject | nul
         if (docSnap.exists()) {
             return { id: docSnap.id, ...docSnap.data() } as PortfolioProject;
         } else {
-            return null;
+            console.log(`Project with id "${id}" not found in Firestore, checking fallback data.`);
+            return fallbackProjects.find(p => p.id === id) || null;
         }
     } catch (error) {
-        console.error("Firebase error, returning fallback project by id:", error);
+        console.error(`Firebase error fetching project with id "${id}", returning fallback data:`, error);
         return fallbackProjects.find(p => p.id === id) || null;
     }
 }
