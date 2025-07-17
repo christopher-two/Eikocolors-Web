@@ -73,8 +73,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="w-full py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center">
+      <section id="about" className="w-full py-16 md:py-24 bg-background relative">
+        <div className="absolute top-0 left-0 right-0 text-secondary z-0 -translate-y-1/2">
+            <svg viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none" className="w-full h-auto">
+                <path d="M0,50 C360,150 1080,-50 1440,50 L1440,0 L0,0 Z"></path>
+            </svg>
+        </div>
+        <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden">
                 <Image
                 src="https://placehold.co/600x800.png"
