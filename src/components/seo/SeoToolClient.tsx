@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,7 +31,7 @@ const initialState = {
 };
 
 export function SeoToolClient() {
-    const [state, formAction] = useActionState(handleSeoSuggestion, initialState)
+    const [state, formAction, isPending] = useActionState(handleSeoSuggestion, initialState)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -48,7 +48,7 @@ export function SeoToolClient() {
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form action={formAction} onSubmit={form.handleSubmit(formAction)} className="space-y-8">
+                    <form action={formAction} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="websiteContent"
@@ -85,14 +85,14 @@ export function SeoToolClient() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" disabled={form.formState.isSubmitting}>
-                            {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        <Button type="submit" disabled={isPending}>
+                            {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             Generar Sugerencias
                         </Button>
                     </form>
                 </Form>
 
-                {form.formState.isSubmitting && (
+                {isPending && (
                     <div className="mt-8 flex items-center justify-center text-muted-foreground">
                         <Loader2 className="mr-2 h-6 w-6 animate-spin" />
                         <span className="text-lg">Analizando y generando ideas...</span>
