@@ -11,7 +11,7 @@ export default function Home() {
       <section className="w-full pt-20 md:pt-32 lg:pt-40 bg-background relative">
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
           <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl mx-auto">
-            Ayudo a marcas de consumo consciente a traducir sus valores en una identidad visual memorable.
+            Una impresión que cautiva
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
             Soy Eikocolors, una diseñadora gráfica estratégica. Mi misión es crear diseños que no solo se vean bien, sino que conecten con tu audiencia, cuenten tu historia y potencien tus ventas.
