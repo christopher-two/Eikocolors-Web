@@ -86,7 +86,14 @@ export function Footer() {
             <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">
                 <p>&copy; {new Date().getFullYear()} Eikocolors. Todos los derechos reservados.</p>
                 <p className="mt-4 sm:mt-0">
-                    Desarrollado con ♥ en <Link href="https://firebase.google.com/studio" target="_blank" className="text-primary hover:underline">Firebase Studio</Link>
+                    Desarrollado por{' '}
+                    <Link href="https://christopher.com.mx" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        Christophertwo
+                    </Link>
+                    {' '}x{' '}
+                    <Link href="https://override.com.mx" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                        Override
+                    </Link>
                 </p>
             </div>
         </div>
