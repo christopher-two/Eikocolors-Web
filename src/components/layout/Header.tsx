@@ -59,7 +59,7 @@ export function Header() {
 
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-max px-4">
+    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-4xl px-4">
       <div className="container flex h-16 items-center justify-center p-0">
         
         <div className="md:hidden">
