@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -50,6 +51,7 @@ export function Header() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const isMobile = useIsMobile();
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsClient(true);
@@ -86,7 +88,7 @@ export function Header() {
                                   onClick={() => setMenuOpen(false)}
                                   className={cn(
                                     "font-medium transition-colors hover:text-primary flex items-center text-lg w-full p-4 rounded-md",
-                                    usePathname() === item.href ? "bg-secondary text-secondary-foreground" : "text-muted-foreground"
+                                    pathname === item.href ? "bg-secondary text-secondary-foreground" : "text-muted-foreground"
                                   )}
                               >
                                 {item.icon && <item.icon className="h-5 w-5 mr-2" />}
