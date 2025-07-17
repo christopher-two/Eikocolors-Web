@@ -6,19 +6,13 @@ import { Bot, Loader2, Send, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { handleAssistantQuery } from "@/app/assistant/actions"
+import { handleAssistantQuery, type AssistantState, type Message } from "@/app/assistant/actions"
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card'
 
-const initialState = {
-    data: null,
+const initialState: AssistantState = {
+    messages: [],
     error: null,
-    question: null,
 };
-
-interface Message {
-    role: 'user' | 'assistant';
-    content: string;
-}
 
 function SubmitButton() {
     const { pending } = useFormStatus();
@@ -31,26 +25,15 @@ function SubmitButton() {
 
 export function AssistantClient() {
     const [state, formAction] = useActionState(handleAssistantQuery, initialState)
-    const [messages, setMessages] = useActionState<Message[]>((prevMessages, newMessages) => [...prevMessages, ...newMessages], []);
     const formRef = useRef<HTMLFormElement>(null);
     const chatContainerRef = useRef<HTMLDivElement>(null);
+    const { pending } = useFormStatus();
 
-    useEffect(() => {
-        if (state.question) {
-            setMessages([{ role: 'user', content: state.question }]);
-        }
-        if (state.data) {
-             setMessages([{ role: 'assistant', content: state.data.answer }]);
-        } else if (state.error) {
-             setMessages([{ role: 'assistant', content: state.error }]);
-        }
-    }, [state, setMessages]);
-    
     useEffect(() => {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
-    }, [messages]);
+    }, [state.messages]);
 
 
     return (
@@ -59,7 +42,7 @@ export function AssistantClient() {
                 <h2 className="text-xl font-semibold">Chat</h2>
             </CardHeader>
             <CardContent ref={chatContainerRef} className="flex-grow overflow-y-auto pr-4 space-y-6">
-                {messages.map((message, index) => (
+                {state.messages.map((message, index) => (
                     <div key={index} className={`flex items-start gap-4 ${message.role === 'user' ? 'justify-end' : ''}`}>
                         {message.role === 'assistant' && <div className="p-2 bg-primary rounded-full text-primary-foreground"><Bot className="h-6 w-6" /></div>}
                         <div className={`rounded-lg px-4 py-3 max-w-[80%] ${message.role === 'user' ? 'bg-secondary text-secondary-foreground' : 'bg-muted text-muted-foreground'}`}>
@@ -68,7 +51,16 @@ export function AssistantClient() {
                         {message.role === 'user' && <div className="p-2 bg-secondary rounded-full text-secondary-foreground"><User className="h-6 w-6" /></div>}
                     </div>
                 ))}
-                
+                {pending && (
+                    <div className="flex items-start gap-4">
+                        <div className="p-2 bg-primary rounded-full text-primary-foreground">
+                            <Bot className="h-6 w-6" />
+                        </div>
+                        <div className="rounded-lg px-4 py-3 max-w-[80%] bg-muted text-muted-foreground flex items-center">
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                        </div>
+                    </div>
+                )}
             </CardContent>
             <CardFooter className="pt-6 border-t">
                 <form 
@@ -79,7 +71,7 @@ export function AssistantClient() {
                     }} 
                     className="flex w-full items-center space-x-2"
                 >
-                    <Input id="question" name="question" placeholder="Escribe tu pregunta aquí..." autoComplete="off" />
+                    <Input id="question" name="question" placeholder="Escribe tu pregunta aquí..." autoComplete="off" disabled={pending}/>
                     <SubmitButton />
                 </form>
             </CardFooter>

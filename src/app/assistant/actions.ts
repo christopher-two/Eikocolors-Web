@@ -2,27 +2,43 @@
 
 import { askAssistant, type AskAssistantOutput } from '@/ai/flows/assistant-flow';
 
-interface FormState {
-    data: AskAssistantOutput | null;
+export interface Message {
+    role: 'user' | 'assistant';
+    content: string;
+}
+
+export interface AssistantState {
+    messages: Message[];
     error: string | null;
-    question: string | null;
 }
 
 export async function handleAssistantQuery(
-    prevState: FormState,
+    prevState: AssistantState,
     formData: FormData
-): Promise<FormState> {
+): Promise<AssistantState> {
     const question = formData.get('question') as string;
 
     if (!question) {
-        return { data: null, error: 'Por favor, introduce una pregunta.', question: null };
+        return { 
+            ...prevState,
+            error: 'Por favor, introduce una pregunta.',
+         };
     }
     
+    const newMessages: Message[] = [...prevState.messages, { role: 'user', content: question }];
+
     try {
         const result = await askAssistant({ question });
-        return { data: result, error: null, question };
+        return { 
+            messages: [...newMessages, { role: 'assistant', content: result.answer }],
+            error: null,
+        };
     } catch (error) {
         console.error("Error con el asistente de IA:", error);
-        return { data: null, error: 'Hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.', question };
+        const errorMessage = 'Hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.';
+        return { 
+            messages: [...newMessages, { role: 'assistant', content: errorMessage }],
+            error: errorMessage 
+        };
     }
 }
