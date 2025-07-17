@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Sparkles, X } from 'lucide-react';
+import { Bot, Menu, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -14,9 +14,9 @@ const navLinks = [
   { href: '/about', label: 'Sobre Mí' },
   { href: '/portfolio', label: 'Portafolio' },
   { href: '/services', label: 'Servicios' },
-  { href: '/store', label: 'Tienda' },
+  { href: '/store',label: 'Tienda' },
   { href: '/contact', label: 'Contacto' },
-  { href: '/seo-tool', label: 'SEO Tool', icon: <Sparkles className="h-4 w-4 mr-1 text-accent" /> },
+  { href: '/assistant', label: 'Asistente IA', icon: <Bot className="h-4 w-4 mr-1 text-accent" /> },
 ];
 
 const Logo = () => (

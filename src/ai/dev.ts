@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/seo-keyword-suggestions.ts';
+import '@/ai/flows/assistant-flow';
