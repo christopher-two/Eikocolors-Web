@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <section className="w-full pt-20 md:pt-32 lg:pt-40 bg-background relative">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+        <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
           <h1 className="font-headline text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight max-w-4xl mx-auto">
             Ayudo a marcas de consumo consciente a traducir sus valores en una identidad visual memorable.
           </h1>
@@ -25,7 +25,7 @@ export default function Home() {
             </Button>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 text-secondary">
+        <div className="absolute bottom-0 left-0 right-0 text-secondary z-0">
             <svg viewBox="0 0 1440 100" fill="currentColor" preserveAspectRatio="none" className="w-full h-auto">
                 <path d="M0,50 C360,150 1080,-50 1440,50 L1440,100 L0,100 Z"></path>
             </svg>
