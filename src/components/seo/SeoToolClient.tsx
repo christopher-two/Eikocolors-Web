@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { useFormState } from 'react-dom'
+import { useActionState } from 'react'
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,7 +31,7 @@ const initialState = {
 };
 
 export function SeoToolClient() {
-    const [state, formAction] = useFormState(handleSeoSuggestion, initialState)
+    const [state, formAction] = useActionState(handleSeoSuggestion, initialState)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
