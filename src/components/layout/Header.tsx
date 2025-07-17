@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Bot, Menu, X } from 'lucide-react';
@@ -8,6 +8,7 @@ import { Bot, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const navLinkItems = [
   { href: '/', label: 'Inicio' },
@@ -45,8 +46,16 @@ const NavLink = ({ href, label, icon: Icon, onClick, isMobile = false }: { href:
     );
 };
 
+
 export function Header() {
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -72,16 +81,18 @@ export function Header() {
                             <span className="sr-only">Cerrar menú</span>
                         </Button>
                     </div>
-                    <nav className="flex flex-col items-start space-y-4 mt-6">
-                        {navLinkItems.map((item) => (
-                            <NavLink
-                                key={item.href}
-                                {...item}
-                                isMobile={true}
-                                onClick={() => setMenuOpen(false)}
-                            />
-                        ))}
-                    </nav>
+                    {isClient && (
+                      <nav className="flex flex-col items-start space-y-4 mt-6">
+                          {navLinkItems.map((item) => (
+                              <NavLink
+                                  key={item.href}
+                                  {...item}
+                                  isMobile={true}
+                                  onClick={() => setMenuOpen(false)}
+                              />
+                          ))}
+                      </nav>
+                    )}
                 </div>
             </SheetContent>
             </Sheet>
@@ -91,11 +102,13 @@ export function Header() {
           <div className="w-full flex-1 md:w-auto md:flex-none md:hidden">
               <Logo />
           </div>
-          <nav className="hidden items-center space-x-6 md:flex">
-            {navLinkItems.map((item) => (
-              <NavLink key={item.href} {...item} />
-            ))}
-          </nav>
+          {isClient && !isMobile && (
+            <nav className="hidden items-center space-x-6 md:flex">
+              {navLinkItems.map((item) => (
+                <NavLink key={item.href} {...item} isMobile={false} />
+              ))}
+            </nav>
+          )}
         </div>
       </div>
     </header>
