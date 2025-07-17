@@ -26,7 +26,7 @@ const Logo = () => (
     </Link>
 )
 
-const NavLink = ({ href, label, icon: Icon, onClick, isMobile = false }: { href: string; label: string; icon?: React.ElementType, onClick?: () => void, isMobile?: boolean }) => {
+const NavLink = ({ href, label, icon: Icon, onClick }: { href: string; label: string; icon?: React.ElementType, onClick?: () => void }) => {
     const pathname = usePathname();
     const isActive = pathname === href;
 
@@ -35,9 +35,8 @@ const NavLink = ({ href, label, icon: Icon, onClick, isMobile = false }: { href:
             href={href}
             onClick={onClick}
             className={cn(
-                "font-medium transition-colors hover:text-primary flex items-center",
-                isMobile ? "text-lg" : "text-sm",
-                isActive ? "text-primary" : "text-muted-foreground"
+                "font-medium transition-all duration-300 hover:text-primary flex items-center text-sm px-4 py-2 rounded-full",
+                isActive ? "bg-secondary text-secondary-foreground" : "text-muted-foreground"
             )}
         >
             {Icon && <Icon className={cn("h-4 w-4 mr-1", isActive ? "text-accent" : "")} />}
@@ -58,16 +57,13 @@ export function Header() {
 
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
-        <div className="mr-4 hidden md:flex">
-            <Logo />
-        </div>
+    <header className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-max px-4">
+      <div className="container flex h-16 items-center justify-center p-0">
         
         <div className="md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="bg-background/80 backdrop-blur-sm rounded-full">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Abrir menú</span>
                 </Button>
@@ -82,14 +78,20 @@ export function Header() {
                         </Button>
                     </div>
                     {isClient && (
-                      <nav className="flex flex-col items-start space-y-4 mt-6">
+                      <nav className="flex flex-col items-start space-y-2 mt-6">
                           {navLinkItems.map((item) => (
-                              <NavLink
+                              <Link
                                   key={item.href}
-                                  {...item}
-                                  isMobile={true}
+                                  href={item.href}
                                   onClick={() => setMenuOpen(false)}
-                              />
+                                  className={cn(
+                                    "font-medium transition-colors hover:text-primary flex items-center text-lg w-full p-4 rounded-md",
+                                    usePathname() === item.href ? "bg-secondary text-secondary-foreground" : "text-muted-foreground"
+                                  )}
+                              >
+                                {item.icon && <item.icon className="h-5 w-5 mr-2" />}
+                                {item.label}
+                              </Link>
                           ))}
                       </nav>
                     )}
@@ -98,14 +100,11 @@ export function Header() {
             </Sheet>
         </div>
 
-        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none md:hidden">
-              <Logo />
-          </div>
+        <div className="flex flex-1 items-center justify-center">
           {isClient && !isMobile && (
-            <nav className="hidden items-center space-x-6 md:flex">
+            <nav className="hidden items-center space-x-2 md:flex bg-background/80 backdrop-blur-sm p-2 rounded-full border shadow-sm">
               {navLinkItems.map((item) => (
-                <NavLink key={item.href} {...item} isMobile={false} />
+                <NavLink key={item.href} {...item} />
               ))}
             </nav>
           )}
