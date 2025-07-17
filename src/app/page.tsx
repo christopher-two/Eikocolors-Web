@@ -3,9 +3,14 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { ArrowRight, Quote } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { featuredProjects, testimonials } from '@/lib/data';
+import { testimonials } from '@/lib/data';
+import { getPortfolioProjects } from '@/services/portfolioService';
+import type { PortfolioProject } from '@/lib/types';
 
-export default function Home() {
+export default async function Home() {
+  const allProjects: PortfolioProject[] = await getPortfolioProjects();
+  const featuredProjects = allProjects.slice(0, 3);
+
   return (
     <div className="flex flex-col">
       <section className="w-full min-h-screen bg-background relative flex flex-col justify-center">
@@ -105,7 +110,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="testimonials" className="w-full py-16 md:py-24 bg-background">
+      <section id="testimonials" className="w-full py-16 md:py-24 bg-secondary">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Lo que dicen mis clientes</h2>

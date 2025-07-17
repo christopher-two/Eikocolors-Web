@@ -9,7 +9,9 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { servicePackages, portfolioProjects } from '@/lib/data';
+import { servicePackages } from '@/lib/data';
+import { getPortfolioProjects } from '@/services/portfolioService';
+import type { PortfolioProject } from '@/lib/types';
 
 const AskAssistantInputSchema = z.object({
   question: z.string().describe('La pregunta del usuario para el asistente.'),
@@ -29,7 +31,18 @@ export async function askAssistant(
   return assistantFlow(input);
 }
 
-const studioContext = `
+
+const assistantFlow = ai.defineFlow(
+  {
+    name: 'assistantFlow',
+    inputSchema: AskAssistantInputSchema,
+    outputSchema: AskAssistantOutputSchema,
+  },
+  async (input) => {
+    
+    const portfolioProjects: PortfolioProject[] = await getPortfolioProjects();
+
+    const studioContext = `
 # Sobre Eikocolors Studio:
 Eikocolors es un estudio de diseño gráfico estratégico dirigido por una diseñadora llamada Eikocolors. Su misión es ayudar a marcas de consumo consciente a traducir sus valores en una identidad visual memorable que conecte con su audiencia, cuente su historia y potencie sus ventas.
 Los valores fundamentales son la Sostenibilidad, el Minimalismo y la Innovación.
@@ -61,11 +74,11 @@ ${portfolioProjects
 - Tiempo de respuesta: 24-48 horas hábiles.
 `;
 
-const prompt = ai.definePrompt({
-  name: 'assistantPrompt',
-  input: { schema: AskAssistantInputSchema },
-  output: { schema: AskAssistantOutputSchema },
-  system: `Eres un asistente de IA amigable y profesional para Eikocolors Studio, un estudio de diseño. Tu nombre es "Eiko-bot".
+    const prompt = ai.definePrompt({
+      name: 'assistantPrompt',
+      input: { schema: AskAssistantInputSchema },
+      output: { schema: AskAssistantOutputSchema },
+      system: `Eres un asistente de IA amigable y profesional para Eikocolors Studio, un estudio de diseño. Tu nombre es "Eiko-bot".
   Tu propósito es actuar como un recepcionista virtual, respondiendo preguntas de potenciales clientes de manera útil y conversacional.
   Usa el siguiente contexto para responder las preguntas. Sé conciso y directo, pero mantén un tono cálido y accesible. Si no sabes la respuesta, amablemente indica que no tienes esa información y sugiere al usuario que contacte directamente al estudio a través del formulario de contacto.
   No inventes información que no esté en el contexto. Responde siempre en español.
@@ -73,16 +86,9 @@ const prompt = ai.definePrompt({
   Contexto del Estudio:
   ${studioContext}
   `,
-  prompt: `Pregunta del usuario: {{{question}}}`,
-});
+      prompt: `Pregunta del usuario: {{{question}}}`,
+    });
 
-const assistantFlow = ai.defineFlow(
-  {
-    name: 'assistantFlow',
-    inputSchema: AskAssistantInputSchema,
-    outputSchema: AskAssistantOutputSchema,
-  },
-  async (input) => {
     const { output } = await prompt(input);
     return output!;
   }

@@ -1,4 +1,4 @@
-import { portfolioProjects } from "@/lib/data";
+import { getPortfolioProjects, getProjectBySlug } from "@/services/portfolioService";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
@@ -6,15 +6,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import type { PortfolioProject } from "@/lib/types";
 
 export async function generateStaticParams() {
-  return portfolioProjects.map((project) => ({
+  const projects = await getPortfolioProjects();
+  return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
-export default function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const project = portfolioProjects.find((p) => p.slug === params.slug);
+export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
+  const project: PortfolioProject | null = await getProjectBySlug(params.slug);
 
   if (!project) {
     notFound();

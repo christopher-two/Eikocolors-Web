@@ -6,17 +6,11 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import type { PortfolioProject } from '@/lib/types';
 
-interface Project {
-  slug: string;
-  title: string;
-  category: string;
-  imageUrl: string;
-  aiHint: string;
-}
 
 interface PortfolioClientProps {
-  projects: Project[];
+  projects: PortfolioProject[];
   categories: string[];
 }
 
