@@ -1,40 +1,94 @@
-import { Instagram, Linkedin } from 'lucide-react';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
+'use client';
 
-const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-        <path d="M15.2 9.4a2.6 2.6 0 0 1-2.2 0H8.5v5.3h4.5a2.6 2.6 0 0 0 2.2-4.4Z"/>
-        <path d="M8.5 9.4h2.2a2.6 2.6 0 0 1 0 5.3H8.5Z"/>
-        <path d="M2.8 14.1a3.5 3.5 0 0 0 3.3 3.3H18a3.5 3.5 0 0 0 3.3-3.3V9.8a3.5 3.5 0 0 0-3.3-3.3H6.1a3.5 3.5 0 0 0-3.3 3.3Z"/>
-        <path d="M15.8 7.4h.7"/>
-    </svg>
-)
+import { Github, Instagram, Linkedin, Twitter } from 'lucide-react';
+import Link from 'next/link';
+
+const footerNav = [
+    {
+        title: "Estudio",
+        items: [
+            { label: "Sobre Mí", href: "/about" },
+            { label: "Portafolio", href: "/portfolio" },
+            { label: "Contacto", href: "/contact" },
+        ]
+    },
+    {
+        title: "Servicios",
+        items: [
+            { label: "Identidad de Marca", href: "/services" },
+            { label: "Packaging", href: "/services" },
+            { label: "Diseño Web", href: "/services" },
+        ]
+    },
+    {
+        title: "Legal",
+        items: [
+            { label: "Política de Privacidad", href: "#" },
+            { label: "Términos y Condiciones", href: "#" },
+        ]
+    }
+]
 
 const socialLinks = [
+    { name: 'Twitter', icon: Twitter, url: '#' },
     { name: 'LinkedIn', icon: Linkedin, url: '#' },
     { name: 'Instagram', icon: Instagram, url: '#' },
-    { name: 'Behance', icon: BehanceIcon, url: '#' },
+    { name: 'GitHub', icon: Github, url: '#' },
 ]
+
+const Logo = () => (
+    <Link href="/" className="flex items-center space-x-2">
+        <span className="font-headline text-2xl font-bold">Eikocolors</span>
+    </Link>
+)
+
 
 export function Footer() {
   return (
-    <footer className="bg-secondary">
-      <div className="container mx-auto px-4 md:px-6 py-8">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="mb-4 md:mb-0">
-            <span className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Eikocolors Studio. Todos los derechos reservados.</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            {socialLinks.map((social) => (
-                <Button key={social.name} variant="ghost" size="icon" asChild>
-                    <Link href={social.url} target="_blank" rel="noopener noreferrer">
-                        <social.icon className="h-5 w-5" />
-                        <span className="sr-only">{social.name}</span>
-                    </Link>
-                </Button>
-            ))}
-          </div>
+    <footer className="bg-background text-foreground">
+      <div className="container mx-auto px-4 md:px-6 py-12">
+        <div className="bg-card text-card-foreground rounded-lg p-8 md:p-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+                <div className="lg:col-span-2 pr-8">
+                    <Logo />
+                    <p className="mt-4 text-muted-foreground">
+                        Diseño gráfico estratégico para marcas de consumo consciente.
+                    </p>
+                </div>
+
+                {footerNav.map((section) => (
+                    <div key={section.title}>
+                        <h3 className="font-semibold text-foreground mb-4">{section.title}</h3>
+                        <ul className="space-y-3">
+                            {section.items.map((item) => (
+                                <li key={item.label}>
+                                    <Link href={item.href} className="text-muted-foreground hover:text-primary transition-colors">
+                                        {item.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+                 <div>
+                    <h3 className="font-semibold text-foreground mb-4">Social</h3>
+                    <div className="flex items-center space-x-4">
+                        {socialLinks.map((social) => (
+                            <Link key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
+                                <social.icon className="h-6 w-6" />
+                                <span className="sr-only">{social.name}</span>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            
+            <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">
+                <p>&copy; {new Date().getFullYear()} Eikocolors. Todos los derechos reservados.</p>
+                <p className="mt-4 sm:mt-0">
+                    Desarrollado con ♥ en <Link href="https://firebase.google.com/studio" target="_blank" className="text-primary hover:underline">Firebase Studio</Link>
+                </p>
+            </div>
         </div>
       </div>
     </footer>
