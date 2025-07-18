@@ -1,15 +1,23 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import type { ServiceCategory } from '@/lib/types';
-import { Check, Search } from 'lucide-react';
+import type { ServiceCategory, ServiceItem } from '@/lib/types';
+import { Search } from 'lucide-react';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 interface ServicesClientProps {
   categories: ServiceCategory[];
+}
+
+interface EnrichedServiceItem extends ServiceItem {
+    categoryId: string;
+    categoryTitle: string;
+    categoryDescription?: string;
+    isCategoryCard?: boolean;
 }
 
 export function ServicesClient({ categories }: ServicesClientProps) {
@@ -18,38 +26,45 @@ export function ServicesClient({ categories }: ServicesClientProps) {
 
   const allCategoryNames = ['Todos', ...categories.map(c => c.title)];
 
-  const filteredCategories = useMemo(() => {
-    let filtered = categories;
+  const allServices = useMemo(() => {
+    return categories.flatMap(category => {
+      if (category.items.length === 0) {
+        return [{
+          name: category.title,
+          details: category.description,
+          categoryId: category.id,
+          categoryTitle: category.title,
+          isCategoryCard: true,
+        }] as EnrichedServiceItem[];
+      }
+      return category.items.map(item => ({
+        ...item,
+        categoryId: category.id,
+        categoryTitle: category.title,
+        isCategoryCard: false,
+      }));
+    });
+  }, [categories]);
+
+
+  const filteredServices = useMemo(() => {
+    let filtered = allServices;
 
     if (activeFilter !== 'Todos') {
-      filtered = filtered.filter(category => category.title === activeFilter);
+      filtered = filtered.filter(service => service.categoryTitle === activeFilter);
     }
 
     if (searchTerm) {
       const lowercasedTerm = searchTerm.toLowerCase();
-      filtered = filtered
-        .map(category => {
-          const matchingItems = category.items.filter(
-            item =>
-              item.name.toLowerCase().includes(lowercasedTerm) ||
-              item.details.toLowerCase().includes(lowercasedTerm)
-          );
-          
-          if (matchingItems.length > 0) {
-            return { ...category, items: matchingItems };
-          }
-          
-          if (category.title.toLowerCase().includes(lowercasedTerm) || category.description.toLowerCase().includes(lowercasedTerm)) {
-            return category;
-          }
-
-          return null;
-        })
-        .filter((category): category is ServiceCategory => category !== null);
+      filtered = filtered.filter(
+        service =>
+          service.name.toLowerCase().includes(lowercasedTerm) ||
+          service.details.toLowerCase().includes(lowercasedTerm)
+      );
     }
     
     return filtered;
-  }, [categories, searchTerm, activeFilter]);
+  }, [allServices, searchTerm, activeFilter]);
 
   return (
     <div>
@@ -78,34 +93,20 @@ export function ServicesClient({ categories }: ServicesClientProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredCategories.map(category => (
-          <Card key={category.id} className="flex flex-col">
+        {filteredServices.map((service, index) => (
+          <Card key={`${service.categoryId}-${index}`} className="flex flex-col">
             <CardHeader>
-              <CardTitle className="font-headline text-2xl">{category.title}</CardTitle>
-              <CardDescription>{category.description}</CardDescription>
+              <CardTitle className="font-headline text-2xl">{service.name}</CardTitle>
+              {!service.isCategoryCard && <Badge variant="secondary" className="w-fit">{service.categoryTitle}</Badge>}
             </CardHeader>
             <CardContent className="flex-grow">
-              {category.items.length > 0 ? (
-                <ul className="space-y-4">
-                  {category.items.map((item, index) => (
-                    <li key={index} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold">{item.name}</h4>
-                        <p className="text-muted-foreground text-sm">{item.details}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-muted-foreground text-sm">Esta categoría no tiene artículos detallados.</p>
-              )}
+                <p className="text-muted-foreground text-sm">{service.details}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {filteredCategories.length === 0 && (
+      {filteredServices.length === 0 && (
          <div className="text-center py-16">
             <p className="text-lg text-muted-foreground">No se encontraron servicios que coincidan con tu búsqueda.</p>
             <p className="text-muted-foreground mt-2">Intenta con otros términos o limpia los filtros.</p>
