@@ -98,10 +98,7 @@ export default async function Home() {
             <div>
                 <h2 className="font-headline text-3xl md:text-4xl font-bold">La historia detrás del color</h2>
                 <p className="mt-4 text-lg text-muted-foreground">
-                Mi pasión por el diseño nació de la creencia de que la estética y la estrategia pueden ir de la mano para crear un impacto real. No se trata solo de crear algo bonito, sino de resolver problemas, comunicar valores y construir conexiones duraderas.
-                </p>
-                <p className="mt-4 text-lg text-muted-foreground">
-                Con un enfoque en la sostenibilidad y el minimalismo, ayudo a marcas con propósito a encontrar su voz visual y a destacarse en un mercado saturado.
+                Mi nombre es Gloria, fundadora de Eikocolors. Mi pasión por el diseño nace de la creencia de que la estética y la estrategia pueden ir de la mano para crear un impacto real. Con 15 años de experiencia en imprenta, especializada en diseño de pre-imprenta, y formación profesional en Diseño Gráfico, fundé Eikocolors. Cada diseño es una obra de arte única y exclusiva, creada con un toque personal y basada estrictamente en las ideas y especificaciones de cada cliente. Tu visión es el punto de partida para mi creatividad.
                 </p>
                 <Button asChild size="lg" className="mt-6">
                     <Link href="/about">Conóceme mejor</Link>
