@@ -104,16 +104,18 @@ const mockProjects: PortfolioProject[] = [
 ];
 
 
-export async function getPortfolioProjects(): Promise<PortfolioProject[]> {
+export function getPortfolioProjects(): PortfolioProject[] {
+    // In a real app, this would fetch from a database or CMS.
+    // For static export, we return the mock data directly.
     return mockProjects;
 }
 
-export async function getProjectBySlug(slug: string): Promise<PortfolioProject | null> {
+export function getProjectBySlug(slug: string): PortfolioProject | null {
     const project = mockProjects.find(p => p.slug === slug);
     return project || null;
 }
 
-export async function getProjectById(id: string): Promise<PortfolioProject | null> {
+export function getProjectById(id: string): PortfolioProject | null {
     const project = mockProjects.find(p => p.id === id);
     return project || null;
 }

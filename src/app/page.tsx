@@ -7,8 +7,8 @@ import { testimonials } from '@/lib/data';
 import { getPortfolioProjects } from '@/services/portfolioService';
 import type { PortfolioProject } from '@/lib/types';
 
-export default async function Home() {
-  const allProjects: PortfolioProject[] = await getPortfolioProjects();
+export default function Home() {
+  const allProjects: PortfolioProject[] = getPortfolioProjects();
   const featuredProjects = allProjects.slice(0, 3);
 
   return (

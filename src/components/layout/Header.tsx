@@ -18,7 +18,6 @@ const navLinkItems = [
   { href: '/services', label: 'Servicios' },
   { href: '/store',label: 'Tienda' },
   { href: '/contact', label: 'Contacto' },
-  { href: '/assistant', label: 'Eikobot', icon: Bot },
 ];
 
 const Logo = () => (

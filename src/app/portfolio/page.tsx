@@ -2,8 +2,8 @@ import { PortfolioClient } from '@/components/portfolio/PortfolioClient';
 import { getPortfolioProjects } from '@/services/portfolioService';
 import type { PortfolioProject } from '@/lib/types';
 
-export default async function PortfolioPage() {
-  const projects: PortfolioProject[] = await getPortfolioProjects();
+export default function PortfolioPage() {
+  const projects: PortfolioProject[] = getPortfolioProjects();
   const categories = [...new Set(projects.map(p => p.category))];
 
   return (

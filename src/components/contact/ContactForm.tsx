@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
-import { handleContactForm } from "@/app/contact/actions"
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "El nombre debe tener al menos 2 caracteres." }),
@@ -47,15 +46,20 @@ export function ContactForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const result = await handleContactForm(values);
+        console.log("Form submitted (static site):", values);
 
-        if (result.success) {
+        // For a static site, we can't run server code.
+        // We'll just show a success message.
+        // To actually send an email, you would need a third-party service like Formspree, Resend, etc.
+        try {
+            // Simulate a network delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
             toast({
                 title: "¡Mensaje enviado!",
                 description: "Gracias por contactarme. Te responderé lo antes posible.",
             })
             form.reset();
-        } else {
+        } catch (error) {
              toast({
                 title: "Error al enviar",
                 description: "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.",

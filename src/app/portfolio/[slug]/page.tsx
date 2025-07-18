@@ -8,15 +8,16 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { PortfolioProject } from "@/lib/types";
 
-export async function generateStaticParams() {
-  const projects = await getPortfolioProjects();
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
+// This function is commented out for static export, but can be used for incremental static regeneration
+// export async function generateStaticParams() {
+//   const projects = getPortfolioProjects();
+//   return projects.map((project) => ({
+//     slug: project.slug,
+//   }));
+// }
 
-export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const project: PortfolioProject | null = await getProjectBySlug(params.slug);
+export default function CaseStudyPage({ params }: { params: { slug: string } }) {
+  const project: PortfolioProject | null = getProjectBySlug(params.slug);
 
   if (!project) {
     notFound();
