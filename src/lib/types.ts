@@ -29,3 +29,15 @@ export interface ServicePackage {
   benefits: string[];
   deliverables: string[];
 }
+
+export interface ServiceItem {
+  name: string;
+  details: string;
+}
+
+export interface ServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  items: ServiceItem[];
+}

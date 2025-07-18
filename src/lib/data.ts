@@ -1,4 +1,4 @@
-import type { Testimonial, ServicePackage } from './types';
+import type { Testimonial, ServicePackage, ServiceCategory } from './types';
 
 export const testimonials: Testimonial[] = [
   {
@@ -80,4 +80,69 @@ export const servicePackages: ServicePackage[] = [
             "Entrega en formatos vectoriales y rasterizados."
         ],
     }
+];
+
+export const serviceCategories: ServiceCategory[] = [
+  {
+    id: 'design',
+    title: 'Diseño Gráfico Integral',
+    description: 'Ofrecemos servicios de diseño gráfico en general, creando soluciones visuales que comunican tu mensaje de manera efectiva y atractiva. Cada proyecto es abordado con un enfoque personalizado para asegurar que tu marca destaque.',
+    items: []
+  },
+  {
+    id: 'custom-items',
+    title: 'Artículos Personalizados',
+    description: 'Dale un toque único a tus objetos cotidianos y promocionales con nuestros servicios de personalización:',
+    items: [
+      { name: 'Tazas, Termos, Vasos y Tequileros', details: 'Personalizados con diversas técnicas como DTF, sublimado, vinil, DTF UV y serigrafía. Incluye diseño a medida y el artículo de tu preferencia.' },
+      { name: 'Playeras, Sudaderas, Gorras y Mandiles', details: 'Diseños exclusivos para cualquier tamaño, con el diseño ya incluido en el costo.' },
+      { name: 'Pañaleros Personalizados', details: 'Diseños creativos incluidos para cualquier tamaño, perfectos para los más pequeños.' },
+      { name: 'Cojines', details: 'Con diseño personalizado y el tipo de cojín que prefieras.' },
+      { name: 'Velas', details: 'Diseño personalizado y el tipo de vela que elijas.' },
+    ]
+  },
+  {
+    id: 'printing-cutting',
+    title: 'Impresión y Corte Especializado',
+    description: 'Contamos con soluciones de impresión y corte para tus necesidades:',
+    items: [
+      { name: 'Corte de Vinil', details: 'Incluye diseño personalizado y el tipo de vinil que prefieras.' },
+      { name: 'Lonas Personalizadas', details: 'Con diseño a medida y el tamaño que necesites.' },
+      { name: 'Sellos (Madera, Textil y Automático)', details: 'Diseño personalizado y el tipo de sello de tu elección.' },
+      { name: 'Etiqueta Textil', details: 'Diseño personalizado y el tipo de etiqueta que prefieras.' },
+      { name: 'Etiquetas Escolares', details: 'Con diseño personalizado y el tamaño que el cliente prefiera.' },
+      { name: 'Etiquetas Personalizadas', details: 'Diseño a medida y el tamaño que desees.' },
+    ]
+  },
+  {
+    id: 'stationery',
+    title: 'Papelería y Documentos',
+    description: 'Profesionaliza tu imagen con nuestra papelería personalizada:',
+    items: [
+      { name: 'Tarjetas de Presentación (una o dos vistas)', details: 'Incluye diseño personalizado. El diseño está incluido en el costo a partir de un millar. Para paquetes de 50, 100 o 200 unidades, el diseño no está incluido en el costo.' },
+      { name: 'Notas de Venta', details: 'Disponibles al tamaño requerido, a partir de 100 unidades, con diseño incluido.' },
+      { name: 'Papelería Empresarial en General', details: 'Soluciones completas para todas tus necesidades de papelería corporativa.' },
+      { name: 'Calendarios', details: 'Diseño personalizado y el tipo de calendario que prefieras.' },
+    ]
+  },
+  {
+    id: 'events',
+    title: 'Eventos y Celebraciones',
+    description: 'Haz tus momentos especiales aún más memorables con nuestros artículos personalizados para eventos:',
+    items: [
+      { name: 'Recuerdos Personalizados', details: 'Ideales para revelación de género, baby shower, bautizo, presentación, primera comunión, servilletas, confirmación, XV años, bodas, despedidas de soltero/a, cumpleaños en general, y fechas especiales.' },
+      { name: 'Dulceros Personalizados', details: 'Incluye diseño y estilo a preferencia del cliente.' },
+      { name: 'Invitaciones', details: 'Con diseño personalizado y el tipo de invitación que prefieras.' },
+      { name: 'Servicios Luctuosos', details: 'Diseño personalizado y el tipo de servicio que el cliente prefiera.' },
+    ]
+  },
+  {
+    id: 'bags',
+    title: 'Bolsas Personalizadas',
+    description: 'Bolsas para toda ocasión con un toque único:',
+    items: [
+      { name: 'Bolsas', details: 'Diseño personalizado y el tipo de bolsa que prefieras.' },
+      { name: 'Bolsas de Papel Craft', details: 'Diseño personalizado y el tipo de bolsa que elijas.' },
+    ]
+  }
 ];
