@@ -1,7 +1,7 @@
 
 'use client';
 
-import { Github, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Facebook, Github, Instagram } from 'lucide-react';
 import Link from 'next/link';
 
 const footerNav = [
@@ -31,8 +31,7 @@ const footerNav = [
 ]
 
 const socialLinks = [
-    { name: 'Twitter', icon: Twitter, url: '#' },
-    { name: 'LinkedIn', icon: Linkedin, url: '#' },
+    { name: 'Facebook', icon: Facebook, url: '#' },
     { name: 'Instagram', icon: Instagram, url: '#' },
     { name: 'GitHub', icon: Github, url: '#' },
 ]
