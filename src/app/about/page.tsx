@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { testimonials } from '@/lib/data';
-import { CheckCircle, Quote } from 'lucide-react';
+import { CheckCircle, Quote, Rocket, Clock, Wallet } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -54,24 +54,24 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-center">
                 <div className="flex flex-col items-center">
                     <div className="bg-primary text-primary-foreground rounded-full p-4 mb-4">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-leaf"><path d="M11 20A7 7 0 0 1 4 13H2a10 10 0 0 0 10 10zM2 13a10 10 0 0 1 10-10 10 10 0 0 1 10 10h-2a7 7 0 0 0-7-7 7 7 0 0 0-7 7z"/><path d="M12 21a10 10 0 0 0 10-10h-2a7 7 0 0 1-7 7z"/></svg>
+                       <Wallet className="h-6 w-6"/>
                     </div>
-                    <h3 className="font-headline text-2xl font-semibold">Sostenibilidad</h3>
-                    <p className="mt-2 text-muted-foreground">Diseño con conciencia, eligiendo materiales y procesos que respetan nuestro planeta.</p>
+                    <h3 className="font-headline text-2xl font-semibold">Accesibilidad</h3>
+                    <p className="mt-2 text-muted-foreground">Productos y servicios a precios competitivos.</p>
                 </div>
                 <div className="flex flex-col items-center">
                      <div className="bg-primary text-primary-foreground rounded-full p-4 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-gem"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M12 22V9"/><path d="m3.5 8.5 17 0"/><path d="m2 9 4-6"/><path d="m22 9-4-6"/></svg>
+                        <Rocket className="h-6 w-6"/>
                      </div>
-                    <h3 className="font-headline text-2xl font-semibold">Minimalismo</h3>
-                    <p className="mt-2 text-muted-foreground">Busco la claridad y la esencia. Menos es más cuando cada elemento tiene un propósito.</p>
+                    <h3 className="font-headline text-2xl font-semibold">Rapidez en Entregas</h3>
+                    <p className="mt-2 text-muted-foreground">Agilidad para que recibas tus diseños cuando los necesitas.</p>
                 </div>
                  <div className="flex flex-col items-center">
                      <div className="bg-primary text-primary-foreground rounded-full p-4 mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-lightbulb"><path d="M15 14c.2-1 .7-1.7 1.5-2.5C17.7 10.2 18 9.2 18 8a6 6 0 0 0-12 0c0 1.2.3 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                        <Clock className="h-6 w-6"/>
                      </div>
-                    <h3 className="font-headline text-2xl font-semibold">Innovación</h3>
-                    <p className="mt-2 text-muted-foreground">Me mantengo curiosa y en constante aprendizaje para ofrecer soluciones frescas y efectivas.</p>
+                    <h3 className="font-headline text-2xl font-semibold">Disponibilidad de Horario</h3>
+                    <p className="mt-2 text-muted-foreground">Flexibilidad total para coordinar entregas, adaptándose a tu agenda.</p>
                 </div>
           </div>
         </div>
