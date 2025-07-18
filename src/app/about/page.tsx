@@ -20,10 +20,13 @@ export default function AboutPage() {
           <div className="order-2 md:order-1">
             <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold">La historia detrás del color</h1>
             <p className="mt-6 text-lg text-muted-foreground">
-              Hola, soy Eikocolors. Mi viaje en el diseño no comenzó en un aula, sino con una fascinación por cómo las formas y los colores pueden contar historias y evocar emociones. Creo firmemente que el buen diseño es una herramienta poderosa para resolver problemas y construir puentes entre las marcas y las personas.
+              Mi nombre es Gloria, y soy la fundadora de Eikocolors. Mi pasión por el diseño nació de la creencia de que la estética y la estrategia pueden ir de la mano para crear un impacto real. No se trata solo de crear algo bonito, sino de resolver problemas, comunicar valores y construir conexiones duraderas. Mi trayectoria profesional es una combinación de formación académica y una amplia experiencia práctica. Estudié Contabilidad, lo que me brinda una sólida base en la gestión empresarial, pero mi verdadera pasión y especialidad es el Diseño Gráfico, área en la que me formé profesionalmente.
             </p>
             <p className="mt-4 text-lg text-muted-foreground">
-              Mi misión es ayudar a marcas con propósito, especialmente aquellas en el espacio del consumo consciente, a articular sus valores a través de un diseño honesto, bello y funcional. No creo en las tendencias pasajeras, sino en crear identidades visuales atemporales que crezcan con tu negocio.
+              Además, trabajé en una imprenta durante 15 años, tiempo en el cual me especialicé en Diseño de Pre-imprenta, adquiriendo un conocimiento profundo de todo el proceso gráfico. Con toda esta experiencia y conocimiento, fundé mi propia empresa: Eikocolors. Con un enfoque en la personalización, ayudo a marcas con propósito a encontrar su voz visual y a destacarse en un mercado saturado.
+            </p>
+             <p className="mt-4 text-lg text-muted-foreground">
+              En Eikocolors, cada diseño es una obra de arte única y exclusiva para cada cliente. Mi filosofía de trabajo se centra en la personalización, creando diseños únicos y especiales e infundiendo un toque distintivo y personal en cada creación. No manejo catálogos preestablecidos, ya que mi objetivo es crear diseños específicos y personalizados, basados estrictamente en las ideas y especificaciones de cada cliente. Tu visión es el punto de partida para mi creatividad.
             </p>
             <Button asChild size="lg" className="mt-8">
               <Link href="/contact">Trabajemos juntos</Link>
