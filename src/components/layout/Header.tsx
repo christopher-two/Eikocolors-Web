@@ -4,7 +4,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bot, Menu, X } from 'lucide-react';
+import { Bot, Home, User, Briefcase, Wrench, Store, Mail, Menu, X } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -12,12 +12,12 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const navLinkItems = [
-  { href: '/', label: 'Inicio' },
-  { href: '/about', label: 'Sobre Mí' },
-  { href: '/portfolio', label: 'Portafolio' },
-  { href: '/services', label: 'Servicios' },
-  { href: '/store',label: 'Tienda' },
-  { href: '/contact', label: 'Contacto' },
+    { href: '/', label: 'Inicio', icon: Home },
+    { href: '/about', label: 'Sobre Mí', icon: User },
+    { href: '/portfolio', label: 'Portafolio', icon: Briefcase },
+    { href: '/services', label: 'Servicios', icon: Wrench },
+    { href: '/store',label: 'Tienda', icon: Store },
+    { href: '/contact', label: 'Contacto', icon: Mail },
 ];
 
 const Logo = () => (
