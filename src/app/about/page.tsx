@@ -6,10 +6,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const specialties = [
-    "Identidad Visual Estratégica",
-    "Diseño de Packaging Sostenible",
-    "Diseño de Interfaces (UI/UX) Centrado en el Usuario",
-    "Ilustración Conceptual y Editorial"
+    "Diseño Gráfico Personalizado",
+    "Diseño de Pre-imprenta",
+    "Soluciones de Diseño Flexibles",
 ]
 
 export default function AboutPage() {
