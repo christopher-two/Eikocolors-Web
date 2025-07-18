@@ -15,9 +15,9 @@ export default function AboutPage() {
   return (
     <div className="bg-background">
       <section className="container mx-auto px-4 md:px-6 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1">
-            <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold">La historia detrás del color</h1>
+        <div className="max-w-4xl mx-auto">
+          <div>
+            <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-center">La historia detrás del color</h1>
             <p className="mt-6 text-lg text-muted-foreground">
               Mi nombre es Gloria, y soy la fundadora de Eikocolors. Mi pasión por el diseño nació de la creencia de que la estética y la estrategia pueden ir de la mano para crear un impacto real. No se trata solo de crear algo bonito, sino de resolver problemas, comunicar valores y construir conexiones duraderas. Mi trayectoria profesional es una combinación de formación académica y una amplia experiencia práctica. Estudié Contabilidad, lo que me brinda una sólida base en la gestión empresarial, pero mi verdadera pasión y especialidad es el Diseño Gráfico, área en la que me formé profesionalmente.
             </p>
@@ -27,24 +27,16 @@ export default function AboutPage() {
              <p className="mt-4 text-lg text-muted-foreground">
               En Eikocolors, cada diseño es una obra de arte única y exclusiva para cada cliente. Mi filosofía de trabajo se centra en la personalización, creando diseños únicos y especiales e infundiendo un toque distintivo y personal en cada creación. No manejo catálogos preestablecidos, ya que mi objetivo es crear diseños específicos y personalizados, basados estrictamente en las ideas y especificaciones de cada cliente. Tu visión es el punto de partida para mi creatividad.
             </p>
-            <Button asChild size="lg" className="mt-8">
-              <Link href="/contact">Trabajemos juntos</Link>
-            </Button>
-          </div>
-          <div className="order-1 md:order-2 relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden shadow-lg">
-             <Image
-                src="https://placehold.co/600x800.png"
-                alt="Retrato profesional de Eikocolors"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
-                data-ai-hint="professional designer"
-              />
+            <div className="text-center">
+              <Button asChild size="lg" className="mt-8">
+                <Link href="/contact">Trabajemos juntos</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-secondary py-16 md:py-24">
+      <section className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Mis Valores Fundamentales</h2>
