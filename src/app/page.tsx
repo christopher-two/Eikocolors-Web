@@ -19,7 +19,7 @@ export default async function Home() {
             Una impresión que cautiva
           </h1>
           <p className="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground">
-            Soy Eikocolors, una diseñadora gráfica estratégica. Mi misión es crear diseños que no solo se vean bien, sino que conecten con tu audiencia, cuenten tu historia y potencien tus ventas.
+            Soy Gloria, fundadora de Eikocolors. En Eikocolors, soy una diseñadora gráfica con una misión clara: crear diseños que no solo se vean bien, sino que conecten con tu audiencia, cuenten tu historia y potencien tus ventas. Cada diseño es una obra de arte única y exclusiva para cada cliente, con un toque distintivo y personal.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Button asChild size="lg" className="font-bold">
