@@ -25,7 +25,7 @@ const footerNav = [
         title: "Legal",
         items: [
             { label: "Política de Privacidad", href: "#" },
-            { label: "Términos y Condiciones", href: "#" },
+            { label: "Térmimos y Condiciones", href: "#" },
         ]
     }
 ]
@@ -45,7 +45,7 @@ const Logo = () => (
 
 export function Footer() {
   return (
-    <footer className="bg-secondary text-foreground">
+    <footer className="bg-background text-foreground">
       <div className="container mx-auto px-4 md:px-6 py-12">
         <div className="bg-card text-card-foreground rounded-lg p-8 md:p-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
