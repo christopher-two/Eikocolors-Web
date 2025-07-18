@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import type { PortfolioProject } from '@/lib/types';
@@ -47,7 +46,7 @@ export function PortfolioClient({ projects, categories }: PortfolioClientProps) 
             <CardHeader className="p-0">
               <Link href={`/portfolio/${project.slug}`}>
                 <div className="aspect-w-3 aspect-h-2">
-                  <Image
+                  <img
                     src={project.imageUrl}
                     alt={project.title}
                     width={600}

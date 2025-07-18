@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, Quote } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { testimonials } from '@/lib/data';
 import { getPortfolioProjects } from '@/services/portfolioService';
@@ -48,7 +47,7 @@ export default function Home() {
               <Card key={project.slug} className="overflow-hidden group">
                  <CardHeader className="p-0">
                   <Link href={`/portfolio/${project.slug}`}>
-                    <Image
+                    <img
                       src={project.imageUrl}
                       alt={project.title}
                       width={600}
@@ -86,12 +85,10 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
             <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden">
-                <Image
+                <img
                 src="https://placehold.co/600x800.png"
                 alt="Retrato de Eikocolors"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-lg"
+                className="rounded-lg object-cover w-full h-full"
                 data-ai-hint="designer portrait"
                 />
             </div>
@@ -122,7 +119,7 @@ export default function Home() {
                 </CardContent>
                 <CardFooter className="p-6 border-t">
                     <div className="flex items-center">
-                        <Image
+                        <img
                             src={testimonial.avatarUrl}
                             alt={testimonial.name}
                             width={40}

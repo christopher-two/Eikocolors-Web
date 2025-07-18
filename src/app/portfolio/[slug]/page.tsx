@@ -1,6 +1,5 @@
 import { getPortfolioProjects, getProjectBySlug } from "@/services/portfolioService";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Quote } from "lucide-react";
@@ -8,13 +7,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { PortfolioProject } from "@/lib/types";
 
-// This function is commented out for static export, but can be used for incremental static regeneration
-// export async function generateStaticParams() {
-//   const projects = getPortfolioProjects();
-//   return projects.map((project) => ({
-//     slug: project.slug,
-//   }));
-// }
+export async function generateStaticParams() {
+  const projects = getPortfolioProjects();
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
 
 export default function CaseStudyPage({ params }: { params: { slug: string } }) {
   const project: PortfolioProject | null = getProjectBySlug(params.slug);
@@ -34,7 +32,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
       </section>
 
       <div className="container mx-auto px-4 md:px-6 py-12">
-        <Image
+        <img
           src={project.imageUrl}
           alt={`Imagen principal del proyecto ${project.title}`}
           width={1200}
@@ -88,7 +86,7 @@ export default function CaseStudyPage({ params }: { params: { slug: string } }) 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {project.images.map((image, index) => (
                 <div key={index} className="rounded-lg overflow-hidden shadow-md">
-                    <Image
+                    <img
                         src={image.url}
                         alt={image.alt}
                         width={800}

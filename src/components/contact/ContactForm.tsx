@@ -81,9 +81,7 @@ export function ContactForm() {
                                 <Input placeholder="Tu nombre" {...field} />
                             </FormControl>
                             <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        </FormItem>)} />
                 <FormField
                     control={form.control}
                     name="email"
