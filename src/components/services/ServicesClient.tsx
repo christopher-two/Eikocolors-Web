@@ -54,14 +54,14 @@ export function ServicesClient({ categories }: ServicesClientProps) {
   return (
     <div>
       <div className="mb-12 space-y-6">
-        <div className="relative">
+        <div className="relative w-full max-w-2xl mx-auto">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Buscar un servicio... (ej. Tazas, Tarjetas, Playeras)"
+            placeholder="¿Qué servicio buscas?"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-full max-w-2xl mx-auto"
+            className="pl-10 w-full"
           />
         </div>
         <div className="flex justify-center flex-wrap gap-2">
