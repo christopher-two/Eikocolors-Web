@@ -93,14 +93,14 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="testimonials" className="w-full py-16 md:py-24 bg-secondary">
+      <section id="testimonials" className="w-full py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="font-headline text-3xl md:text-4xl font-bold">Confían en mi trabajo</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="flex flex-col bg-background">
+              <Card key={index} className="flex flex-col bg-card">
                 <CardContent className="p-6 flex-grow">
                   <Quote className="w-8 h-8 text-primary mb-4" />
                   <p className="text-muted-foreground">{testimonial.quote}</p>
