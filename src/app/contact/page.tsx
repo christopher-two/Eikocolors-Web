@@ -24,20 +24,20 @@ export default function ContactPage() {
                             <div className="space-y-4 text-muted-foreground">
                                 <div className="flex items-center">
                                     <Mail className="h-5 w-5 mr-3 text-primary"/>
-                                    <a href="mailto:hola@eikocolors.com" className="hover:text-primary transition-colors">hola@eikocolors.com</a>
+                                    <a href="mailto:eiko.colors@gmail.com" className="hover:text-primary transition-colors">eiko.colors@gmail.com</a>
                                 </div>
                                 <div className="flex items-center">
                                     <Phone className="h-5 w-5 mr-3 text-primary"/>
-                                    <span>(Disponible bajo petición)</span>
+                                    <span>4521012562</span>
                                 </div>
                             </div>
                             <div className="mt-8 pt-6 border-t">
-                                <h4 className="font-semibold mb-3">Horario de oficina:</h4>
-                                <p className="text-muted-foreground">Lunes a Viernes<br/>9:00 AM - 6:00 PM</p>
+                                <h4 className="font-semibold mb-3">Horario:</h4>
+                                <p className="text-muted-foreground">Lunes a Sabado<br/>9 AM - 9 PM</p>
                             </div>
                              <div className="mt-8 pt-6 border-t">
                                 <h4 className="font-semibold mb-3">Tiempo de respuesta:</h4>
-                                <p className="text-muted-foreground">Normalmente respondo en 24-48 horas hábiles.</p>
+                                <p className="text-muted-foreground">Casi de inmediato</p>
                             </div>
                         </div>
                     </div>
