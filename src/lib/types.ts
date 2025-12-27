@@ -22,6 +22,14 @@ export interface Testimonial {
   avatarUrl: string;
 }
 
+export interface Client {
+  id: string;
+  name: string;
+  logoUrl: string;
+  description: string;
+  websiteUrl: string;
+}
+
 export interface ServicePackage {
   id: string;
   title: string;
@@ -40,4 +48,12 @@ export interface ServiceCategory {
   title: string;
   description: string;
   items: ServiceItem[];
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  images: string[];
+  category: string;
 }

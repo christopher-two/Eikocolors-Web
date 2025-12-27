@@ -1,85 +1,85 @@
-import type { Testimonial, ServicePackage, ServiceCategory } from './types';
+import type { Testimonial, ServicePackage, ServiceCategory, Client } from './types';
 
-export const testimonials: Testimonial[] = [
+export const clients: Client[] = [
   {
     id: '1',
-    quote: 'Eikocolors capturó la esencia de nuestra marca a la perfección. El diseño no solo es hermoso, sino que cuenta nuestra historia y conecta con nuestros clientes.',
-    name: 'Ana García',
-    title: 'Fundadora, Café Origen',
-    avatarUrl: 'https://placehold.co/100x100.png',
+    name: 'Café Origen',
+    logoUrl: 'https://placehold.co/200x100?text=Cafe+Origen',
+    description: 'Diseño de identidad de marca completa, incluyendo logo, paleta de colores y packaging para su nueva línea de café orgánico.',
+    websiteUrl: 'https://example.com/cafe-origen',
   },
   {
     id: '2',
-    quote: 'El trabajo de Eikocolors elevó nuestra marca. El packaging es ahora uno de nuestros principales diferenciadores y un punto de atracción para los clientes.',
-    name: 'Carlos Mendoza',
-    title: 'CEO, Piel Pura',
-    avatarUrl: 'https://placehold.co/100x100.png',
+    name: 'Piel Pura',
+    logoUrl: 'https://placehold.co/200x100?text=Piel+Pura',
+    description: 'Rediseño de etiquetas y packaging para productos de cuidado de la piel, enfocándose en una imagen minimalista y sostenible.',
+    websiteUrl: 'https://example.com/piel-pura',
   },
   {
     id: '3',
-    quote: 'Transformó nuestra herramienta. Ahora es potente, fácil de usar y visualmente atractiva, lo que ha sido clave para la retención de clientes.',
-    name: 'Sofia Reyes',
-    title: 'Directora de Marketing, DataFlow Inc.',
-    avatarUrl: 'https://placehold.co/100x100.png',
+    name: 'DataFlow',
+    logoUrl: 'https://placehold.co/200x100?text=DataFlow',
+    description: 'Creación de ilustraciones personalizadas y diseño de interfaz para su plataforma de análisis de datos.',
+    websiteUrl: 'https://example.com/dataflow',
   },
 ];
 
 
 export const servicePackages: ServicePackage[] = [
-    {
-        id: '1',
-        title: "Identidad de Marca Completa",
-        idealFor: "Startups y marcas en evolución que buscan una base visual sólida y coherente.",
-        benefits: [
-            "Coherencia total en todos los puntos de contacto.",
-            "Diferenciación clara en tu mercado.",
-            "Una base sólida para crecer y escalar.",
-            "Conexión emocional con tu audiencia."
-        ],
-        deliverables: [
-            "Logo principal, secundario y submarcas.",
-            "Paleta de colores y tipografías.",
-            "Manual de marca completo.",
-            "Diseño de papelería básica (tarjetas, etc).",
-            "Plantillas para redes sociales."
-        ],
-    },
-    {
-        id: '2',
-        title: "Diseño de Packaging Estratégico",
-        idealFor: "Marcas de productos de consumo que quieren enamorar desde el estante.",
-        benefits: [
-            "Destaca frente a la competencia.",
-            "Comunica la calidad y los valores de tu producto.",
-            "Mejora la experiencia de unboxing del cliente.",
-            "Diseño optimizado para producción."
-        ],
-        deliverables: [
-            "Diseño de etiquetas, cajas o envases.",
-            "Selección de materiales y acabados.",
-            "Mockups 3D realistas.",
-            "Archivos finales listos para imprenta.",
-            "Guía de aplicación del diseño."
-        ],
-    },
-    {
-        id: '3',
-        title: "Ilustraciones con Alma",
-        idealFor: "Empresas que necesitan un toque único y personal para su web, contenido o productos.",
-        benefits: [
-            "Estilo visual único y diferenciador.",
-            "Comunica conceptos complejos de forma simple.",
-            "Añade personalidad y calidez a tu marca.",
-            "Contenido 100% original y a medida."
-        ],
-        deliverables: [
-            "Serie de ilustraciones personalizadas.",
-            "Iconografía a medida para web o apps.",
-            "Ilustraciones para packaging o editorial.",
-            "Adaptación a diferentes formatos.",
-            "Entrega en formatos vectoriales y rasterizados."
-        ],
-    }
+  {
+    id: '1',
+    title: "Identidad de Marca Completa",
+    idealFor: "Startups y marcas en evolución que buscan una base visual sólida y coherente.",
+    benefits: [
+      "Coherencia total en todos los puntos de contacto.",
+      "Diferenciación clara en tu mercado.",
+      "Una base sólida para crecer y escalar.",
+      "Conexión emocional con tu audiencia."
+    ],
+    deliverables: [
+      "Logo principal, secundario y submarcas.",
+      "Paleta de colores y tipografías.",
+      "Manual de marca completo.",
+      "Diseño de papelería básica (tarjetas, etc).",
+      "Plantillas para redes sociales."
+    ],
+  },
+  {
+    id: '2',
+    title: "Diseño de Packaging Estratégico",
+    idealFor: "Marcas de productos de consumo que quieren enamorar desde el estante.",
+    benefits: [
+      "Destaca frente a la competencia.",
+      "Comunica la calidad y los valores de tu producto.",
+      "Mejora la experiencia de unboxing del cliente.",
+      "Diseño optimizado para producción."
+    ],
+    deliverables: [
+      "Diseño de etiquetas, cajas o envases.",
+      "Selección de materiales y acabados.",
+      "Mockups 3D realistas.",
+      "Archivos finales listos para imprenta.",
+      "Guía de aplicación del diseño."
+    ],
+  },
+  {
+    id: '3',
+    title: "Ilustraciones con Alma",
+    idealFor: "Empresas que necesitan un toque único y personal para su web, contenido o productos.",
+    benefits: [
+      "Estilo visual único y diferenciador.",
+      "Comunica conceptos complejos de forma simple.",
+      "Añade personalidad y calidez a tu marca.",
+      "Contenido 100% original y a medida."
+    ],
+    deliverables: [
+      "Serie de ilustraciones personalizadas.",
+      "Iconografía a medida para web o apps.",
+      "Ilustraciones para packaging o editorial.",
+      "Adaptación a diferentes formatos.",
+      "Entrega en formatos vectoriales y rasterizados."
+    ],
+  }
 ];
 
 export const serviceCategories: ServiceCategory[] = [
@@ -143,6 +143,70 @@ export const serviceCategories: ServiceCategory[] = [
     items: [
       { name: 'Bolsas', details: 'Diseño personalizado y el tipo de bolsa que prefieras.' },
       { name: 'Bolsas de Papel Craft', details: 'Diseño personalizado y el tipo de bolsa que elijas.' },
+    ]
+  }
+];
+
+export const products: import('./types').Product[] = [
+  {
+    id: '1',
+    name: 'Taza Personalizada',
+    description: 'Taza de cerámica de alta calidad con diseño personalizado. Perfecta para regalos o uso corporativo.',
+    category: 'Artículos Personalizados',
+    images: [
+      'https://placehold.co/600x600?text=Taza+1',
+      'https://placehold.co/600x600?text=Taza+2',
+      'https://placehold.co/600x600?text=Taza+3'
+    ]
+  },
+  {
+    id: '2',
+    name: 'Playera Estampada',
+    description: 'Playera de algodón con estampado duradero. Disponible en varias tallas y colores.',
+    category: 'Artículos Personalizados',
+    images: [
+      'https://placehold.co/600x600?text=Playera+1',
+      'https://placehold.co/600x600?text=Playera+2'
+    ]
+  },
+  {
+    id: '3',
+    name: 'Paquete de Branding Básico',
+    description: 'Incluye diseño de logotipo, paleta de colores y tarjeta de presentación.',
+    category: 'Diseño Gráfico',
+    images: [
+      'https://placehold.co/600x600?text=Branding+1',
+      'https://placehold.co/600x600?text=Branding+2'
+    ]
+  },
+  {
+    id: '4',
+    name: 'Tarjetas de Presentación (1000 pzas)',
+    description: 'Impresión de tarjetas de presentación a color, laminado mate, una o dos caras.',
+    category: 'Papelería',
+    images: [
+      'https://placehold.co/600x600?text=Tarjetas+1',
+      'https://placehold.co/600x600?text=Tarjetas+2'
+    ]
+  },
+  {
+    id: '5',
+    name: 'Invitación Digital',
+    description: 'Invitación interactiva para eventos, lista para enviar por WhatsApp.',
+    category: 'Eventos',
+    images: [
+      'https://placehold.co/600x600?text=Invitacion+1',
+      'https://placehold.co/600x600?text=Invitacion+2'
+    ]
+  },
+  {
+    id: '6',
+    name: 'Bolsa Kraft Personalizada',
+    description: 'Bolsas de papel kraft con tu logo impreso, ideales para tiendas y boutiques.',
+    category: 'Bolsas',
+    images: [
+      'https://placehold.co/600x600?text=Bolsa+1',
+      'https://placehold.co/600x600?text=Bolsa+2'
     ]
   }
 ];
