@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+import Image from '@/app/assets/fondo.webp';
 import Link from 'next/link';
 import { clients } from '@/lib/data';
 
@@ -35,7 +36,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
           <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden">
             <img
-              src="https://placehold.co/600x800.png"
+              src={Image.src}
               alt="Retrato de Eikocolors"
               className="rounded-lg object-cover w-full h-full"
               data-ai-hint="designer portrait"
