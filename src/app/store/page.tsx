@@ -1,8 +1,41 @@
-import { Package } from "lucide-react";
-import { products } from "@/lib/data";
-import { ProductCard } from "@/components/store/ProductCard";
+'use client';
+
+import { useEffect, useState } from 'react';
+import { getAllProducts, getCategories } from "@/lib/shop";
+import { StoreClient } from "@/components/store/StoreClient";
+import { ShopProduct, Category } from "@/lib/types";
 
 export default function StorePage() {
+    const [products, setProducts] = useState<ShopProduct[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const [productsData, categoriesData] = await Promise.all([
+                    getAllProducts(),
+                    getCategories()
+                ]);
+                setProducts(productsData);
+                setCategories(categoriesData);
+            } catch (error) {
+                console.error("Failed to fetch shop data:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-background">
+                <div className="animate-pulse text-primary">Cargando tienda...</div>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-background min-h-screen">
             <section className="container mx-auto px-4 md:px-6 py-12 md:py-24">
@@ -13,11 +46,7 @@ export default function StorePage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                <StoreClient initialProducts={products} categories={categories} />
             </section>
         </div>
     );

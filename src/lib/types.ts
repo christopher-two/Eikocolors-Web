@@ -50,10 +50,40 @@ export interface ServiceCategory {
   items: ServiceItem[];
 }
 
+
 export interface Product {
   id: string;
   name: string;
   description: string;
   images: string[];
   category: string;
+}
+
+// Shop Interfaces based on user request
+
+import { Timestamp } from "firebase/firestore";
+
+export interface Category {
+  id: string; // Document ID is usually implied, but adding for completeness in app usage
+  createdAt: Timestamp;
+  name: string;
+}
+
+export interface ShopCollection {
+  id: string;
+  timeStamp: string;
+  name: string;
+  productIds: string[];
+}
+
+export interface ShopProduct {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  images: string[];
+  description: string;
+  inStock: boolean;
+  createdAt: string;
 }
