@@ -7,21 +7,20 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Hardcoded configuration for immediate deployment fix
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL
+  apiKey: "AIzaSyCF4rgLCUAmWQ1MWoeALxGnF2tkmtej-eM",
+  authDomain: "eiko-colors.firebaseapp.com",
+  projectId: "eiko-colors",
+  storageBucket: "eiko-colors.firebasestorage.app",
+  messagingSenderId: "37282779527",
+  appId: "1:37282779527:web:3117c0ace85f7bfbb64322",
+  measurementId: "G-V9XSJ0S2DY",
+  databaseURL: "https://eiko-colors-default-rtdb.firebaseio.com"
 };
 
-console.log("Firebase Project ID logic check:", !!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
-if (!process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
-  console.error("ERROR: NEXT_PUBLIC_FIREBASE_PROJECT_ID is undefined. Check your .env.local file.");
-}
+// Console log removed to avoid leaking info, validation removed as values are hardcoded
+
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
