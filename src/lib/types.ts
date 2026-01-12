@@ -65,7 +65,7 @@ import { Timestamp } from "firebase/firestore";
 
 export interface Category {
   id: string; // Document ID is usually implied, but adding for completeness in app usage
-  createdAt: Timestamp;
+  createdAt: string;
   name: string;
 }
 
