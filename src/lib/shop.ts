@@ -27,12 +27,12 @@ export async function getShopCollections(): Promise<ShopCollection[]> {
         })) as ShopCollection[];
 
         if (collections.length === 0) {
-            return [{ id: 'general', name: 'Catálogo General', timeStamp: new Date().toISOString(), productIds: [] }];
+            return [];
         }
         return collections;
     } catch (error) {
         console.error("Error fetching collections:", error);
-        return [{ id: 'general', name: 'Catálogo General', timeStamp: new Date().toISOString(), productIds: [] }];
+        return [];
     }
 }
 
