@@ -1,32 +1,52 @@
 import { db } from "./firebase";
 import { collection, getDocs, getDoc, doc, query, orderBy, collectionGroup, where, limit } from "firebase/firestore";
 import { Category, ShopCollection, ShopProduct } from "./types";
+import { products as hardcodedProducts } from "./data";
 
 // Categories
 export async function getCategories(): Promise<Category[]> {
-    const querySnapshot = await getDocs(collection(db, "categories"));
-    return querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    })) as Category[];
+    try {
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        return querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        })) as Category[];
+    } catch (error) {
+        console.error("Error fetching categories:", error);
+        return []; // Fallback to empty if not in hardcoded
+    }
 }
 
 // Collections
 export async function getShopCollections(): Promise<ShopCollection[]> {
-    const querySnapshot = await getDocs(collection(db, "collections"));
-    return querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    })) as ShopCollection[];
+    try {
+        const querySnapshot = await getDocs(collection(db, "collections"));
+        const collections = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        })) as ShopCollection[];
+
+        if (collections.length === 0) {
+            return [{ id: 'general', name: 'Catálogo General', timeStamp: new Date().toISOString(), productIds: [] }];
+        }
+        return collections;
+    } catch (error) {
+        console.error("Error fetching collections:", error);
+        return [{ id: 'general', name: 'Catálogo General', timeStamp: new Date().toISOString(), productIds: [] }];
+    }
 }
 
 export async function getShopCollection(id: string): Promise<ShopCollection | null> {
-    const docRef = doc(db, "collections", id);
-    const docSnap = await getDoc(docRef);
+    try {
+        const docRef = doc(db, "collections", id);
+        const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() } as ShopCollection;
-    } else {
+        if (docSnap.exists()) {
+            return { id: docSnap.id, ...docSnap.data() } as ShopCollection;
+        }
+        return null;
+    } catch (error) {
+        console.error("Error fetching collection:", error);
         return null;
     }
 }
@@ -46,17 +66,38 @@ export async function getProducts(collectionId: string): Promise<ShopProduct[]> 
 }
 
 export async function getAllProducts(): Promise<ShopProduct[]> {
-    const productsQuery = query(collectionGroup(db, "items"));
-    const querySnapshot = await getDocs(productsQuery);
-    return querySnapshot.docs.map((doc) => {
-        // Path is "products/{collectionId}/items/{productId}"
-        const parentId = doc.ref.parent.parent?.id;
-        return {
-            id: doc.id,
-            collectionId: parentId,
-            ...doc.data(),
-        };
-    }) as ShopProduct[];
+    let firebaseProducts: ShopProduct[] = [];
+    try {
+        const productsQuery = query(collectionGroup(db, "items"));
+        const querySnapshot = await getDocs(productsQuery);
+        firebaseProducts = querySnapshot.docs.map((doc) => {
+            const parentId = doc.ref.parent.parent?.id;
+            return {
+                id: doc.id,
+                collectionId: parentId,
+                ...doc.data(),
+            };
+        }) as ShopProduct[];
+    } catch (error) {
+        console.error("Error fetching all products from Firebase:", error);
+    }
+
+    // Convert hardcoded products to ShopProduct format if they aren't already
+    const processedHardcoded = hardcodedProducts.map(p => ({
+        ...p,
+        price: (p as any).price || 0,
+        image: (p as any).image || p.images[0] || '',
+        inStock: (p as any).inStock ?? true,
+        createdAt: (p as any).createdAt || new Date().toISOString(),
+        collectionId: (p as any).collectionId || 'general' // Default collection for hardcoded
+    })) as ShopProduct[];
+
+    // Merge and remove duplicates by ID
+    const allProductsMap = new Map<string, ShopProduct>();
+    processedHardcoded.forEach(p => allProductsMap.set(p.id, p));
+    firebaseProducts.forEach(p => allProductsMap.set(p.id, p));
+
+    return Array.from(allProductsMap.values());
 }
 
 export async function getProduct(collectionId: string, productId: string): Promise<ShopProduct | null> {
