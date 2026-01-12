@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import NextImage from 'next/image';
 import { ShopProduct } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,10 +19,12 @@ export function ProductCard({ product }: ProductCardProps) {
     return (
         <Card className="flex flex-col h-full overflow-hidden hover:shadow-lg transition-shadow bg-card border-2 border-transparent hover:border-primary/20 group">
             <div className="relative aspect-square overflow-hidden bg-secondary/20">
-                <img
-                    src={product.images?.[0] || product.image}
+                <NextImage
+                    src={product.images?.[0] || product.image || '/placeholder.png'}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
             </div>
             <CardHeader className="p-4">

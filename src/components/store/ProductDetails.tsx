@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
+import NextImage from "next/image";
 import { ShoppingCart, ArrowLeft, Check } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -35,10 +36,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                     {/* Gallery Section */}
                     <div className="space-y-4">
                         <div className="aspect-square relative overflow-hidden rounded-lg border bg-secondary/20">
-                            <img
+                            <NextImage
                                 src={selectedImage}
                                 alt={product.name}
-                                className="w-full h-full object-cover transition-all duration-300"
+                                className="object-cover transition-all duration-300"
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         </div>
                         <div className="grid grid-cols-4 gap-4">
@@ -51,10 +55,12 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                                         selectedImage === image ? "border-primary ring-2 ring-primary/20" : "border-transparent hover:border-primary/50"
                                     )}
                                 >
-                                    <img
+                                    <NextImage
                                         src={image}
                                         alt={`${product.name} view ${index + 1}`}
-                                        className="w-full h-full object-cover"
+                                        className="object-cover"
+                                        fill
+                                        sizes="100px"
                                     />
                                 </button>
                             ))}

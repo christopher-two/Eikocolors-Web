@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import NextImage from 'next/image';
 import { clients } from '@/lib/data';
 import { CheckCircle, Rocket, Clock, Wallet } from 'lucide-react';
 import Link from 'next/link';
@@ -112,11 +113,13 @@ export default function AboutPage() {
               >
                 <Card className="flex flex-col h-full bg-card hover:shadow-lg transition-shadow border-2 border-transparent hover:border-primary/20">
                   <CardContent className="p-8 flex flex-col items-center text-center flex-grow">
-                    <div className="h-24 w-full flex items-center justify-center mb-6">
-                      <img
+                    <div className="h-24 w-full flex items-center justify-center mb-6 relative">
+                      <NextImage
                         src={client.logoUrl}
                         alt={`Logo de ${client.name}`}
-                        className="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
                     <h3 className="font-bold text-xl mb-3">{client.name}</h3>

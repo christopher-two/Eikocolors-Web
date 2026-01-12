@@ -78,6 +78,7 @@ export interface ShopCollection {
 
 export interface ShopProduct {
   id: string;
+  collectionId?: string; // Reference to the collection it belongs to
   name: string;
   price: number;
   category: string;

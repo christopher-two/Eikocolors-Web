@@ -3,6 +3,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Trash2, MessageCircle } from "lucide-react";
+import NextImage from "next/image";
 import { useCart } from "@/context/CartContext";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -41,11 +42,13 @@ export function CartSidebar() {
                             <div className="space-y-6">
                                 {cartItems.map((item) => (
                                     <div key={`${item.product.id}-${item.selectedImage}`} className="flex gap-4">
-                                        <div className="h-20 w-20 rounded-md overflow-hidden bg-secondary/20 flex-shrink-0">
-                                            <img
+                                        <div className="h-20 w-20 rounded-md overflow-hidden bg-secondary/20 flex-shrink-0 relative">
+                                            <NextImage
                                                 src={item.selectedImage || item.product.images[0]}
                                                 alt={item.product.name}
                                                 className="h-full w-full object-cover"
+                                                fill
+                                                sizes="80px"
                                             />
                                         </div>
                                         <div className="flex-1 flex flex-col justify-between">

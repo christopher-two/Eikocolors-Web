@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { collection, getDocs, getDoc, doc, query, orderBy, collectionGroup, where } from "firebase/firestore";
+import { collection, getDocs, getDoc, doc, query, orderBy, collectionGroup, where, limit } from "firebase/firestore";
 import { Category, ShopCollection, ShopProduct } from "./types";
 
 // Categories
@@ -40,6 +40,7 @@ export async function getProducts(collectionId: string): Promise<ShopProduct[]> 
 
     return querySnapshot.docs.map((doc) => ({
         id: doc.id,
+        collectionId,
         ...doc.data(),
     })) as ShopProduct[];
 }
@@ -47,10 +48,15 @@ export async function getProducts(collectionId: string): Promise<ShopProduct[]> 
 export async function getAllProducts(): Promise<ShopProduct[]> {
     const productsQuery = query(collectionGroup(db, "items"));
     const querySnapshot = await getDocs(productsQuery);
-    return querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    })) as ShopProduct[];
+    return querySnapshot.docs.map((doc) => {
+        // Path is "products/{collectionId}/items/{productId}"
+        const parentId = doc.ref.parent.parent?.id;
+        return {
+            id: doc.id,
+            collectionId: parentId,
+            ...doc.data(),
+        };
+    }) as ShopProduct[];
 }
 
 export async function getProduct(collectionId: string, productId: string): Promise<ShopProduct | null> {
@@ -58,27 +64,35 @@ export async function getProduct(collectionId: string, productId: string): Promi
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() } as ShopProduct;
+        return { id: docSnap.id, collectionId, ...docSnap.data() } as ShopProduct;
     } else {
         return null;
     }
 }
 
 export async function getProductById(productId: string): Promise<ShopProduct | null> {
-    // Optimization Note:
-    // We are fetching all products and filtering in memory to avoid needing a specific 
-    // COLLECTION_GROUP index in Firebase (which requires manual console setup).
-    // For a larger store, you should create the index and use:
-    // query(collectionGroup(db, "items"), where("id", "==", productId));
-
-    // Attempt to fetch all products
+    // Optimized: Use a collectionGroup query to find the specific product
+    // Note: This requires a Firestore index. If the index doesn't exist, 
+    // it will throw an error with a link to create it.
     try {
-        const allProducts = await getAllProducts();
-        return allProducts.find(p => p.id === productId) || null;
-    } catch (error) {
-        console.error("Error fetching product by ID:", error);
+        const productQuery = query(
+            collectionGroup(db, "items"),
+            where("id", "==", productId),
+            limit(1)
+        );
+        const querySnapshot = await getDocs(productQuery);
+
+        if (!querySnapshot.empty) {
+            const doc = querySnapshot.docs[0];
+            const collectionId = doc.ref.parent.parent?.id;
+            return { id: doc.id, collectionId, ...doc.data() } as ShopProduct;
+        }
+
         return null;
+    } catch (error) {
+        console.error("Error fetching product by ID with query:", error);
+        // Fallback for small catalogs if index is not ready
+        const allProducts = await getAllProducts();
+        return allProducts.find((p: ShopProduct) => p.id === productId) || null;
     }
 }
-
-

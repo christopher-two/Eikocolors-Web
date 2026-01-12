@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight } from 'lucide-react';
-import Image from '@/app/assets/fondo.webp';
+import NextImage from 'next/image';
+import heroImage from '@/app/assets/fondo.webp';
 import Link from 'next/link';
 import { clients } from '@/lib/data';
 
@@ -35,11 +35,13 @@ export default function Home() {
       <section id="about" className="w-full py-16 md:py-24 bg-secondary relative">
         <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
           <div className="relative w-full h-96 md:h-[500px] rounded-lg overflow-hidden">
-            <img
-              src={Image.src}
+            <NextImage
+              src={heroImage}
               alt="Retrato de Eikocolors"
-              className="rounded-lg object-cover w-full h-full"
-              data-ai-hint="designer portrait"
+              className="rounded-lg object-cover"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
           <div>
@@ -76,11 +78,13 @@ export default function Home() {
               >
                 <Card className="flex flex-col h-full bg-card hover:shadow-lg transition-shadow border-2 border-transparent hover:border-primary/20">
                   <CardContent className="p-8 flex flex-col items-center text-center flex-grow">
-                    <div className="h-24 w-full flex items-center justify-center mb-6">
-                      <img
+                    <div className="h-24 w-full flex items-center justify-center mb-6 relative">
+                      <NextImage
                         src={client.logoUrl}
                         alt={`Logo de ${client.name}`}
-                        className="max-h-full max-w-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        className="object-contain grayscale group-hover:grayscale-0 transition-all duration-300"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
                     <h3 className="font-bold text-xl mb-3">{client.name}</h3>
