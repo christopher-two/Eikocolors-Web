@@ -19,6 +19,26 @@ const serializeData = (data: any): any => {
     return serialized;
 };
 
+// Normalize product shape to avoid undefined prices breaking filters/client logic
+const normalizeProduct = (raw: any, id: string, collectionId?: string): ShopProduct => {
+    const priceNum = Number(raw?.price ?? 0);
+    const images = Array.isArray(raw?.images) ? raw.images : [];
+    const image = raw?.image || images[0] || '';
+
+    return {
+        id,
+        collectionId,
+        name: raw?.name || 'Producto sin nombre',
+        price: Number.isFinite(priceNum) ? priceNum : 0,
+        category: raw?.category || 'Sin categoría',
+        image,
+        images,
+        description: raw?.description || '',
+        inStock: typeof raw?.inStock === 'boolean' ? raw.inStock : true,
+        createdAt: raw?.createdAt || raw?.timeStamp || new Date().toISOString(),
+    };
+};
+
 // Categories
 export async function getCategories(): Promise<Category[]> {
     try {
@@ -70,11 +90,10 @@ export async function getProducts(collectionId: string): Promise<ShopProduct[]> 
         const itemsRef = collection(db, "products", collectionId, "items");
         const querySnapshot = await getDocs(itemsRef);
 
-        return querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            collectionId,
-            ...serializeData(doc.data()),
-        })) as ShopProduct[];
+        return querySnapshot.docs.map((doc) => {
+            const data = serializeData(doc.data());
+            return normalizeProduct(data, doc.id, collectionId);
+        });
     } catch (error) {
         console.error(`Error fetching products for collection ${collectionId}:`, error);
         return [];
@@ -85,47 +104,53 @@ export async function getAllProducts(): Promise<ShopProduct[]> {
     const productsMap = new Map<string, ShopProduct>();
 
     try {
-        // Strategy 1: Subcollections named 'items' (nested structure)
-        const productsQuery = query(collectionGroup(db, "items"));
-        const querySnapshot = await getDocs(productsQuery);
+        // Get all collection IDs first from the 'collections' metadata
+        const collectionsSnapshot = await getDocs(collection(db, "collections"));
+        const collectionIds: string[] = collectionsSnapshot.docs.map(doc => doc.id);
 
-        querySnapshot.docs.forEach((doc) => {
-            const parentId = doc.ref.parent.parent?.id;
-            const data = serializeData(doc.data());
-            productsMap.set(doc.id, {
-                id: doc.id,
-                collectionId: parentId,
-                ...data,
-            } as ShopProduct);
-        });
+        console.log("Found collections:", collectionIds);
 
-        // Strategy 2: Root 'products' collection (flat structure)
-        // Fetch only if Strategy 1 didn't find much, or fetch anyway to merge.
-        // Usually apps use one or the other, but we support both for robustness.
-        const rootProductsQuery = query(collection(db, "products"));
-        const rootSnapshot = await getDocs(rootProductsQuery);
+        // Fetch products from each collection's items subcollection
+        // Structure: products/{collectionId}/items/{productId}
+        const fetchPromises = collectionIds.map(async (collectionId) => {
+            try {
+                const itemsRef = collection(db, "products", collectionId, "items");
+                const itemsSnapshot = await getDocs(itemsRef);
 
-        rootSnapshot.docs.forEach((doc) => {
-            // Avoid overwriting if found via subcollection (subcollection is likely more specific if used)
-            if (!productsMap.has(doc.id)) {
-                const data = serializeData(doc.data());
-                productsMap.set(doc.id, {
-                    id: doc.id,
-                    // If flat, collectionId might be in the data, or inferred. 
-                    // If not present, it defaults to undefined, which our robust page.tsx handles.
-                    ...data,
-                } as ShopProduct);
+                console.log(`Collection ${collectionId}: found ${itemsSnapshot.docs.length} products`);
+
+                itemsSnapshot.docs.forEach((doc) => {
+                    const data = serializeData(doc.data());
+                    productsMap.set(doc.id, normalizeProduct(data, doc.id, collectionId));
+                });
+            } catch (err) {
+                console.error(`Error fetching products for collection ${collectionId}:`, err);
             }
         });
+
+        await Promise.all(fetchPromises);
+
+        // If no collections exist, try fetching from a default 'general' collection
+        if (collectionIds.length === 0) {
+            console.log("No collections found, trying 'general' collection...");
+            try {
+                const generalItemsRef = collection(db, "products", "general", "items");
+                const generalSnapshot = await getDocs(generalItemsRef);
+
+                generalSnapshot.docs.forEach((doc) => {
+                    const data = serializeData(doc.data());
+                    productsMap.set(doc.id, normalizeProduct(data, doc.id, "general"));
+                });
+            } catch (err) {
+                console.error("Error fetching from general collection:", err);
+            }
+        }
 
     } catch (error) {
         console.error("Error fetching all products from Firebase:", error);
     }
 
-    // WE DO NOT MERGE HARDCODED PRODUCTS ANYMORE.
-    // If Firebase returns nothing, the user sees nothing.
-    // This allows them to verify if their DB connection is working.
-
+    console.log("Total products fetched:", productsMap.size);
     return Array.from(productsMap.values());
 }
 
@@ -135,7 +160,8 @@ export async function getProduct(collectionId: string, productId: string): Promi
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            return { id: docSnap.id, collectionId, ...serializeData(docSnap.data()) } as ShopProduct;
+            const data = serializeData(docSnap.data());
+            return normalizeProduct(data, docSnap.id, collectionId);
         } else {
             return null;
         }
@@ -158,7 +184,8 @@ export async function getProductById(productId: string): Promise<ShopProduct | n
         if (!querySnapshot.empty) {
             const doc = querySnapshot.docs[0];
             const collectionId = doc.ref.parent.parent?.id;
-            return { id: doc.id, collectionId, ...serializeData(doc.data()) } as ShopProduct;
+            const data = serializeData(doc.data());
+            return normalizeProduct(data, doc.id, collectionId);
         }
 
         // Method 2: Search in 'products' root collection (if Method 1 failed)
@@ -168,7 +195,8 @@ export async function getProductById(productId: string): Promise<ShopProduct | n
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-            return { id: docSnap.id, ...serializeData(docSnap.data()) } as ShopProduct;
+            const data = serializeData(docSnap.data());
+            return normalizeProduct(data, docSnap.id, data?.collectionId);
         }
 
         return null;

@@ -20,29 +20,40 @@ export function StoreClient({ initialProducts, categories, collections }: StoreC
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [inStockOnly, setInStockOnly] = useState<boolean>(false);
 
+    const hasCollections = collections.length > 0;
+    const showCollectionGrid = hasCollections && selectedCollectionId === null;
+
     // Determine max price dynamically
     const maxPrice = useMemo(() => {
-        return Math.max(...initialProducts.map(p => p.price), 1000);
+        const numericPrices = initialProducts
+            .map(p => Number(p.price))
+            .filter((v) => Number.isFinite(v) && v >= 0);
+        return numericPrices.length ? Math.max(...numericPrices) : 1000;
     }, [initialProducts]);
 
     const [priceRange, setPriceRange] = useState<[number, number]>([0, maxPrice]);
 
     // Filter products based on collection and filters
     const filteredProducts = useMemo(() => {
+        const active = collections.find(c => c.id === selectedCollectionId);
+
         return initialProducts.filter(product => {
-            const matchCollection = !selectedCollectionId || product.collectionId === selectedCollectionId;
+            const matchCollection = !selectedCollectionId || product.collectionId === selectedCollectionId || (active?.productIds?.includes(product.id));
             const matchCategory = selectedCategory === 'all' || product.category === selectedCategory;
-            const matchPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+            const upper = Number.isFinite(priceRange[1]) ? priceRange[1] : Infinity;
+            const matchPrice = product.price >= priceRange[0] && product.price <= upper;
             const matchStock = !inStockOnly || product.inStock;
 
             return matchCollection && matchCategory && matchPrice && matchStock;
         });
-    }, [initialProducts, selectedCollectionId, selectedCategory, priceRange, inStockOnly]);
+    }, [initialProducts, selectedCollectionId, selectedCategory, priceRange, inStockOnly, collections]);
 
     const activeCollection = useMemo(() =>
         collections.find(c => c.id === selectedCollectionId),
         [collections, selectedCollectionId]
     );
+
+    const headerTitle = activeCollection?.name || 'Todos los productos';
 
     const handleClearFilters = () => {
         setSelectedCategory('all');
@@ -50,8 +61,8 @@ export function StoreClient({ initialProducts, categories, collections }: StoreC
         setInStockOnly(false);
     };
 
-    // If no collection is selected, show the Collection grid
-    if (!selectedCollectionId) {
+    // If no collection is selected and there are collections, show the Collection grid
+    if (showCollectionGrid) {
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
                 {collections.map((collection) => (
@@ -80,16 +91,18 @@ export function StoreClient({ initialProducts, categories, collections }: StoreC
             {/* Store Header / Back Button */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-6">
                 <div>
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedCollectionId(null)}
-                        className="mb-2 -ml-2 text-muted-foreground hover:text-primary"
-                    >
-                        <ChevronLeft className="w-4 h-4 mr-1" />
-                        Volver a Colecciones
-                    </Button>
-                    <h2 className="text-3xl font-bold font-headline">{activeCollection?.name}</h2>
+                    {hasCollections && (
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setSelectedCollectionId(null)}
+                            className="mb-2 -ml-2 text-muted-foreground hover:text-primary"
+                        >
+                            <ChevronLeft className="w-4 h-4 mr-1" />
+                            Volver a Colecciones
+                        </Button>
+                    )}
+                    <h2 className="text-3xl font-bold font-headline">{headerTitle}</h2>
                 </div>
                 <div className="flex items-center gap-2">
                     <LayoutGrid className="w-5 h-5 text-primary" />

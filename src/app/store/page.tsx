@@ -31,6 +31,8 @@ export default async function StorePage() {
 
     const collections = Array.from(collectionsMap.values());
 
+    console.log('StorePage', { products: products.length, collections: collections.length });
+
     return (
         <div className="min-h-screen bg-background py-8">
             <section className="container mx-auto px-4">
